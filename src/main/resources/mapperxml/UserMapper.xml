@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.domain.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        <result column="birthday" jdbcType="DATE" property="birthday"/>
+        <result column="iphone" jdbcType="INTEGER" property="iphone"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,
+        username,
+        sex,
+        birthday,
+        iphone,
+        address
+    </sql>
+
+    <select id="findByAllCzh" resultMap="BaseResultMap">
+        select *
+        from user;
+    </select>
+
+    <select id="findByIdCzh" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `user`
+        where id=#{id,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insertCzh" keyColumn="id" keyProperty="id" parameterType="com.domain.User" useGeneratedKeys="true">
+        insert into `user` (username, sex, birthday,iphone,address)
+        values (#{username,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE},
+        #{iphone,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateByIdCzh">
+        update `user`
+        <set>
+            <if test="updated.id != null">
+                id = #{updated.id,jdbcType=INTEGER},
+            </if>
+            <if test="updated.username != null">
+                username = #{updated.username,jdbcType=VARCHAR},
+            </if>
+            <if test="updated.sex != null">
+                sex = #{updated.sex,jdbcType=VARCHAR},
+            </if>
+            <if test="updated.birthday != null">
+                birthday = #{updated.birthday,jdbcType=DATE},
+            </if>
+            <if test="updated.iphone != null">
+                iphone = #{updated.iphone,jdbcType=INTEGER},
+            </if>
+            <if test="updated.address != null">
+                address = #{updated.address,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id=#{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteByIdCzh">
+        delete from `user`
+        where id=#{id,jdbcType=INTEGER}
+    </delete>
+</mapper>
